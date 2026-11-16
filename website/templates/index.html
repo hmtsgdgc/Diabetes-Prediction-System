@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prediction System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://googleapis.com">
+</head>
+<body>
+
+    
+    <nav class = "navbar">
+        <!-- <p>DIABETES PREDICTION</p> -->
+        <a href="/">Home</a>
+    </nav>
+    <div class="heading-box">
+        <p>AI-POWERED DIABETES DIAGNOSTICS</p>
+        <h1>Diabetes Prediction System</h1>
+
+        <p class="note">
+            <em>Note: This tool predicts health risks using AI models (Random Forest & ANN). Always consult a doctor for medical decisions.</em>
+        </p>
+    </div>
+
+    <div class="outer-box"> 
+        
+        <form action="/predict" method="POST">
+            
+            <div>
+                <label>Gender:</label>
+                <br>
+                <select name="gender" required>
+                <option value="Female" {% if form_data.get('gender') == 'Female' %}selected{% endif %}>Female</option>
+                <option value="Male" {% if form_data.get('gender') == 'Male' %}selected{% endif %}>Male</option>
+                <option value="Other" {% if form_data.get('gender') == 'Other' %}selected{% endif %}>Other</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Age:</label>
+                <br>
+                <input type="number" step="any" name="age" required placeholder="e.g., 45" value = "{{form_data.get('age', '')}}">
+            </div>
+
+            <div>
+                <label>Hypertension (High BP):</label>
+                <br>
+                <select name="hypertension" required>
+                <option value="0" {% if form_data.get('hypertension') == '0' %}selected{% endif %}>No (0)</option>
+                <option value="1" {% if form_data.get('hypertension') == '1' %}selected{% endif %}>Yes (1)</option>
+                </select>
+            </div>
+
+            <div> 
+                <label>Heart Disease:</label>
+                <br>
+                <select name="heart_disease" required>
+                <option value="0" {% if form_data.get('heart_disease') == '0' %}selected{% endif %}>No (0)</option>
+                <option value="1" {% if form_data.get('heart_disease') == '1' %}selected{% endif %}>Yes (1)</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Smoking History:</label>
+                <br>
+                <select name="smoking_history" required>
+                <option value="never" {% if form_data.get('smoking_history') == 'never' %}selected{% endif %}>Never</option>
+                <option value="current" {% if form_data.get('smoking_history') == 'current' %}selected{% endif %}>Current</option>
+                <option value="former" {% if form_data.get('smoking_history') == 'former' %}selected{% endif %}>Former</option>
+                <option value="ever" {% if form_data.get('smoking_history') == 'ever' %}selected{% endif %}>Ever</option>
+                <option value="not current" {% if form_data.get('smoking_history') == 'not current' %}selected{% endif %}>Not Current</option>
+                <!-- <option value="No Info">No Info</option> -->
+                </select>
+            </div>
+
+            <div>
+                 <label>BMI (Body Mass Index):</label>
+                 <br>
+                <input type="number" step="any" name="bmi" required placeholder="e.g., 25.5" value = "{{form_data.get('bmi', '')}}">
+            </div>
+
+            <div>
+                <label>HbA1c Level:</label>
+                <br>
+                <input type="number" step="any" name="HbA1c_level" required placeholder="e.g., 6.1" value = "{{form_data.get('HbA1c_level', '')}}">
+            </div>
+
+            <div>
+                <label>Blood Glucose Level:</label>
+                <br>
+                <input type="number" name="blood_glucose_level" required placeholder="e.g., 140" value = "{{form_data.get('blood_glucose_level', '')}}">
+            </div>
+
+            <div>
+                <button class = "submit_btn" type="submit">Predict Diabetes</button>
+            </div>
+            
+        </form>
+
+        {% if prediction_text %}
+            <div class="result">
+                <h3>{{ prediction_text }}</h3>
+            </div>
+        {% endif %}
+   
+    </div>
+
+
+    <footer>
+        <!-- <p>&copy; 2026 Rice Pest Detection System | GGV CSIT</p> -->
+    </footer>
+</body>
+</html>
